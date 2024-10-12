@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -19,7 +20,6 @@ import javax.sql.DataSource;
 public class JpaConfig {
 
     @Bean
-    @Order(998)
     public AnnotationTransactionAspect annotationTransactionAspect(PlatformTransactionManager platformTransactionManager) {
         AnnotationTransactionAspect annotationTransactionAspect = AnnotationTransactionAspect.aspectOf();
         annotationTransactionAspect.setTransactionManager(platformTransactionManager);
@@ -27,7 +27,7 @@ public class JpaConfig {
     }
 
     @Bean("transactionManager")
-    @Order(999)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public PlatformTransactionManager transactionManager(DataSource dataSource, EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setDataSource(dataSource);
