@@ -32,7 +32,7 @@ public class BookController {
     @GetMapping("/v2/{id}")
     @Transactional(transactionManager = "transactionManager", propagation = Propagation.REQUIRED, readOnly = true)
     public String getBookV2(@PathVariable Long id) {
-        Optional<Book> bookOptional = bookRepository.findById(id);
+        Optional<Book> bookOptional = bookRepository.findByIdWithAuthor(id);
         if (bookOptional.isPresent()) {
             Author author = bookOptional.get().getAuthor();
             return "Author: " + author.getFirstName() + " " + author.getLastName();
