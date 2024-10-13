@@ -1,6 +1,11 @@
 package com.example.spring2hibernate5aspectj.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyGroup;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table
@@ -9,7 +14,7 @@ import javax.persistence.*;
                 @NamedAttributeNode("author")
         })
 })
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +23,6 @@ public class Book {
     private String title;
 
     @Lob
-    @Basic(fetch = FetchType.LAZY, optional = false)
     private byte[] content;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -14,4 +14,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @EntityGraph(value = "withAuthor", type = EntityGraph.EntityGraphType.LOAD)
     @Query("select b from Book b where b.id = ?1")
     Optional<Book> findByIdWithAuthor(Long id);
+
+    @Query(nativeQuery = true, value = "select id, title, null as content from book where id = ?1")
+    Optional<Book> findById(Long id);
 }
